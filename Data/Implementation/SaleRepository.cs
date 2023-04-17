@@ -66,9 +66,25 @@ namespace Data.Implementation
             return generatedSale;
         }
 
-        public async Task<List<Sale>> Report(DateTime StartDate, DateTime EndDate)
+        public async Task<List<SaleDetail>> Report(DateTime StartDate, DateTime EndDate)
         {
-            //List<SaleDetail> resumeList = _dbContext.SaleDetails.Include(s => s.SaleIdNavigation).ThenInclude()
+            /*List<SaleDetail> resumeList = await _dbContext.SaleDetails
+                .Include(s => s.SaleId)
+                .ThenInclude(u => u.UserId)
+                .Include(s => s.SaleIdNavigation)
+                .ThenInclude(sdt => sdt.SaleDocTypeIdNavigation)
+                .Where(sd => sd.SaleIdNavigation.RegistryDate.Value.Date >= StartDate.Date && sd.SaleIdNavigation.RegistryDate.Value.Date <= EndDate.Date).ToListAsync();*/
+
+            List<SaleDetail> resumeList = await _dbContext.SaleDetails
+    .Include(s => s.Sale)
+        .ThenInclude(u => u.User)
+    .Include(s => s.Sale)
+        .ThenInclude(sdt => sdt.SaleDocType)
+    .Where(sd => sd.Sale.RegistryDate.Value.Date >= StartDate.Date && sd.Sale.RegistryDate.Value.Date <= EndDate.Date)
+    .ToListAsync();
+
+
+            return resumeList;
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Data.Interfaces
     public interface ISaleRepository:IGenericRepository<Sale>
     {
         Task<Sale> Registry(Sale entity);
-        Task<List<Sale>> Report(DateTime StartDate, DateTime EndDate);
+        Task<List<SaleDetail>> Report(DateTime StartDate, DateTime EndDate);
     }
 }
