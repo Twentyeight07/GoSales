@@ -39,6 +39,22 @@ namespace Data.Implementation
                     CorrelativeNumber correlative = _dbContext.CorrelativeNumbers.Where(n=> n.Management == "sale").First();
 
                     correlative.LastNumber = correlative.LastNumber + 1;
+                    correlative.UpdateDate = DateTime.Now;
+
+                    _dbContext.CorrelativeNumbers.Update(correlative);
+                    await _dbContext.SaveChangesAsync();
+
+                    string ceros = string.Concat(Enumerable.Repeat("0", correlative.DigitsQuantity.Value));
+                    string saleNumber = ceros + correlative.LastNumber.ToString();
+                    saleNumber = saleNumber.Substring(saleNumber.Length - correlative.DigitsQuantity.Value, correlative.DigitsQuantity.Value);
+                    entity.SaleNumber = saleNumber;
+
+                    await _dbContext.Sale.AddAsync(entity);
+                    await _dbContext.SaveChangesAsync();
+
+                    generatedSale = entity;
+
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -46,11 +62,13 @@ namespace Data.Implementation
                     throw ex;
                 }
             }
+
+            return generatedSale;
         }
 
-        public Task<List<Sale>> Report(DateTime StartDate, DateTime EndDate)
+        public async Task<List<Sale>> Report(DateTime StartDate, DateTime EndDate)
         {
-            throw new NotImplementedException();
+            //List<SaleDetail> resumeList = _dbContext.SaleDetails.Include(s => s.SaleIdNavigation).ThenInclude()
         }
     }
 }

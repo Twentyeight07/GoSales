@@ -9,7 +9,7 @@ public partial class Business
 
     public string? LogoUrl { get; set; }
 
-    public string? NombreLogo { get; set; }
+    public string? LogoName { get; set; }
 
     public string? DocNumber { get; set; }
 

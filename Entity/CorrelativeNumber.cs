@@ -13,5 +13,5 @@ public partial class CorrelativeNumber
 
     public string? Management { get; set; }
 
-    public DateTime? FechaActualizacion { get; set; }
+    public DateTime? UpdateDate { get; set; }
 }

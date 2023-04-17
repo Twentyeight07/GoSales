@@ -32,7 +32,7 @@ public partial class SalesDbContext : DbContext
 
     public virtual DbSet<RoleMenu> RoleMenus { get; set; }
 
-    public virtual DbSet<Sale> Sales { get; set; }
+    public virtual DbSet<Sale> Sale { get; set; }
 
     public virtual DbSet<SaleDetail> SaleDetails { get; set; }
 
@@ -80,10 +80,10 @@ public partial class SalesDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("name");
-            entity.Property(e => e.NombreLogo)
+            entity.Property(e => e.LogoName)
                 .HasMaxLength(100)
                 .IsUnicode(false)
-                .HasColumnName("nombreLogo");
+                .HasColumnName("logoName");
             entity.Property(e => e.Phone)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -139,7 +139,7 @@ public partial class SalesDbContext : DbContext
 
             entity.Property(e => e.CorrelativeNumberId).HasColumnName("correlativeNumberId");
             entity.Property(e => e.DigitsQuantity).HasColumnName("digitsQuantity");
-            entity.Property(e => e.FechaActualizacion)
+            entity.Property(e => e.UpdateDate)
                 .HasColumnType("datetime")
                 .HasColumnName("fechaActualizacion");
             entity.Property(e => e.LastNumber).HasColumnName("lastNumber");
