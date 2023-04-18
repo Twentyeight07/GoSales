@@ -44,6 +44,7 @@ namespace Domain.Implementation
                 {
                     Host = Config["host"],
                     Port = int.Parse(Config["port"]),
+                    Credentials = credentials,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
                     EnableSsl = true

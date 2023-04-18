@@ -296,9 +296,9 @@ public partial class SalesDbContext : DbContext
             entity.Property(e => e.SubTotal)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("subTotal");
-            entity.Property(e => e.TaxTotal)
+            entity.Property(e => e.TotalTax)
                 .HasColumnType("decimal(10, 2)")
-                .HasColumnName("taxTotal");
+                .HasColumnName("totalTax");
             entity.Property(e => e.Total)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("total");

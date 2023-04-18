@@ -7,6 +7,7 @@ namespace GoSales.Utilities.AutoMapper
 {
     public class AutoMapperProfile : Profile
     {
+        // This AutoMapper profile is to map all the data we have in Entity Layer in our Classes to the ViewModels, it convert all the data we need to convert and pass all data we need
         public AutoMapperProfile()
         {
             #region Role
