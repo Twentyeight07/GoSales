@@ -19,7 +19,7 @@ public partial class Sale
 
     public decimal? SubTotal { get; set; }
 
-    public decimal? TaxTotal { get; set; }
+    public decimal? TotalTax { get; set; }
 
     public decimal? Total { get; set; }
 

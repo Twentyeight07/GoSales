@@ -1,3 +1,4 @@
+using GoSales.Utilities.AutoMapper;
 using IOC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,8 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//With this, we inject all dependencies needed to work on the Web Application
+// With this line, we inject all dependencies needed to work on the Web Application
 builder.Services.InjectDependency(builder.Configuration);
+
+// With this line, we inject the AutoMapper dependency to use it in all the web application
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 
