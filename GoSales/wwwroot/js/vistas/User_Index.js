@@ -5,7 +5,7 @@ const baseModel = {
     name: "",
     email: "",
     phone: "",
-    idRole: 0,
+    roleId: 0,
     isActive: 1,
     picUrl: ""
 }
@@ -84,7 +84,7 @@ function showModal(model = baseModel) {
     $("#txtName").val(model.name)
     $("#txtEmail").val(model.email)
     $("#txtPhone").val(model.phone)
-    $("#cboRole").val(model.idRole == 0 ? $("#cboRole option:first").val() : model.idRole)
+    $("#cboRole").val(model.roleId == 0 ? $("#cboRole option:first").val() : model.idRole)
     $("#cboState").val(model.isActive)
     $("#txtPicture").val("")
     $("#userPicture").attr("src", model.picUrl)
@@ -94,4 +94,58 @@ function showModal(model = baseModel) {
 
 $("#btnNew").click(function () {
     showModal()
+})
+
+$("#btnSave").click(function () {
+
+    const inputs = $("input.input-validar").serializeArray();
+    const inputsNoValue = inputs.filter((item) => item.value.trim() == "")
+
+    if (inputsNoValue.length > 0) {
+        const message = `Debe completar el campo: ${inputsNoValue[0].name}`;
+        toastr.warning("", message);
+        $(`input[name="${inputsNoValue[0].name}"]`).focus();
+        return;
+    }
+
+    const model = structuredClone(baseModel);
+    model["userId"] = parseInt($("#txtId").val())
+    model["name"] = $("#txtName").val()
+    model["email"] = $("#txtEmail").val()
+    model["phone"] = $("#txtPhone").val()
+    model["role"] = $("#cboRole").val()
+    model["isActive"] = $("#cboState").val()
+
+    const pictureInput = document.getElementById("txtPicture");
+
+    const formData = new FormData();
+
+    formData.append("picture", pictureInput.files[0])
+    formData.append("model", JSON.stringify(model))
+
+    $("#modalData").find("div.modal-content").LoadingOverlay("show");
+
+    if (model.userId == 0) {
+        fetch("/Users/Create", {
+            method: "POST",
+            body: formData
+        }).then(response => {
+            $("#modalData").find("div.modal-content").LoadingOverlay("hide");
+            return response.ok ? response.json() : Promise.reject(response);
+        }).then(res => {
+            if (res.state) {
+                dataTable.row.add(res.object).draw(false)
+                $("#modalData").modal("hide")
+                swal("Listo!", "Se ha creado el usuario satisfactoriamente", "success")
+            } else {
+                console.log(res)
+                swal("Lo sentimos :(", res.message, "error")
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    /*debugger;*/
+
 })

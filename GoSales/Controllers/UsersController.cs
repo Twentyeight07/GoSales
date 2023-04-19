@@ -69,11 +69,13 @@ namespace GoSales.Controllers
 
                 gResponse.State = true;
                 gResponse.Object = vmUser;
+
             }
             catch (Exception ex)
             {
+
                 gResponse.State = false;
-                gResponse.Message = ex.Message;
+                gResponse.Message = ex.Message + ex.InnerException;
             }
 
             return StatusCode(StatusCodes.Status200OK, gResponse);
