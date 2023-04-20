@@ -22,7 +22,7 @@ namespace GoSales.Utilities.AutoMapper
                 )
                 .ForMember(dest => 
                 dest.RoleName,
-                opt => opt.MapFrom(origin => origin.IdRoleNavigation.Description)
+                opt => opt.MapFrom(origin => origin.RoleIdNavigation.Description)
                 );
 
             CreateMap<VMUser, User>()
@@ -31,7 +31,7 @@ namespace GoSales.Utilities.AutoMapper
                 opt => opt.MapFrom(origin => origin.IsActive == 1 ? true : false)
                 )
                 .ForMember(dest => 
-                dest.IdRoleNavigation,
+                dest.RoleIdNavigation,
                 opt => opt.Ignore()
                 );
 

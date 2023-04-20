@@ -44,6 +44,9 @@ namespace IOC
 
             // This registers the 'UserService' implementation for the 'IUserService' interface. This allows for specific implementation of CRUD operations and any other business logic related to users.
             services.AddScoped<IUserService, UserService>();
+
+            // This registers the 'BusinessService' implementation for the 'IBusinessService' interface.
+            services.AddScoped<IBusinessService, BusinessService>();
         }
     }
 }

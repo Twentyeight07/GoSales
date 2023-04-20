@@ -30,10 +30,10 @@ namespace Domain.Implementation
         public async Task<List<User>> List()
         {
             IQueryable<User> query = await _repository.Consult();
-            return query.Include(r => r.IdRoleNavigation).ToList();
+            return query.Include(r => r.RoleIdNavigation).ToList();
         }
 
-        public async Task<User> Create(User entity, Stream UserPic = null, string PicName = "", string EmailTemplateUrl = "")
+        public async Task<User> Create(User entity, Stream userPic = null, string picName = "", string EmailTemplateUrl = "")
         {
             User userExist= await _repository.Get(u => u.Email == entity.Email);
 
@@ -44,12 +44,12 @@ namespace Domain.Implementation
             {
                 string generatedPass = _UtilitiesService.GeneratePassword();
                 entity.Password = _UtilitiesService.EncryptSha256(generatedPass);
-                entity.PicName = PicName;
+                entity.PicName = picName;
 
-                if(UserPic != null)
+                if(userPic != null)
                 {
-                    string PicUrl = await _fireBaseService.UploadStorage(UserPic, "user_folder", PicName);
-                    entity.PicUrl = PicUrl;
+                    string picUrl = await _fireBaseService.UploadStorage(userPic, "user_folder", picName);
+                    entity.PicUrl = picUrl;
                 }
 
                 User created_user = await _repository.Create(entity);
@@ -94,7 +94,7 @@ namespace Domain.Implementation
                 }
 
                 IQueryable<User> query = await _repository.Consult(u => u.UserId == created_user.UserId);
-                created_user = query.Include(r => r.IdRoleNavigation).First();
+                created_user = query.Include(r => r.RoleIdNavigation).First();
 
                 return created_user;
             }
@@ -120,7 +120,8 @@ namespace Domain.Implementation
                 edit_user.Name = entity.Name;
                 edit_user.Email = entity.Email;
                 edit_user.Phone = entity.Phone;
-                edit_user.IdRole = entity.IdRole;
+                edit_user.RoleId = entity.RoleId;
+                edit_user.IsActive = entity.IsActive;
 
                 if (edit_user.PicName == "")
                     edit_user.PicName = PicName;
@@ -136,7 +137,7 @@ namespace Domain.Implementation
                 if (!response)
                     throw new TaskCanceledException("No se pudo editar el usuario.");
 
-                User edited_user = userQuery.Include(r => r.IdRoleNavigation).First();
+                User edited_user = userQuery.Include(r => r.RoleIdNavigation).First();
                 return edited_user;
             }
             catch (Exception)
@@ -182,7 +183,7 @@ namespace Domain.Implementation
         {
             IQueryable<User> query = await _repository.Consult(u => u.UserId == UserId);
 
-            User res = query.Include(u => u.IdRoleNavigation).FirstOrDefault();
+            User res = query.Include(u => u.RoleIdNavigation).FirstOrDefault();
 
             return res;
         }

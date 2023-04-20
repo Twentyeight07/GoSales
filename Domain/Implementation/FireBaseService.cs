@@ -25,11 +25,11 @@ namespace Domain.Implementation
             string PicUrl = "";
             try
             {
-                IQueryable<Configuration> query = await _repository.Consult(c => c.Resource.Equals("FireBase_Storage"));
+                IQueryable<Configuration> query = await _repository.Consult(c => c.Resource == "FireBase_Storage");
 
                 Dictionary<string, string> Config = query.ToDictionary(keySelector: c => c.Property, elementSelector: c => c.Value);
 
-                var auth = new FirebaseAuthProvider(new FirebaseConfig(Config["FireBase_Storage"]));
+                var auth = new FirebaseAuthProvider(new FirebaseConfig(Config["api_key"]));
                 var a = await auth.SignInWithEmailAndPasswordAsync(Config["email"], Config["password"]);
                 var cancellation = new CancellationTokenSource();
 
@@ -47,7 +47,7 @@ namespace Domain.Implementation
 
                 PicUrl = await task;
             }
-            catch
+            catch(Exception ex)
             {
                 PicUrl = "";
             }

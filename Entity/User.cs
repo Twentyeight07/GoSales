@@ -13,7 +13,7 @@ public partial class User
 
     public string? Phone { get; set; }
 
-    public int? IdRole { get; set; }
+    public int? RoleId { get; set; }
 
     public string? PicUrl { get; set; }
 
@@ -25,7 +25,7 @@ public partial class User
 
     public DateTime? RegistryDate { get; set; }
 
-    public virtual Role? IdRoleNavigation { get; set; }
+    public virtual Role? RoleIdNavigation { get; set; }
 
     public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();
 }

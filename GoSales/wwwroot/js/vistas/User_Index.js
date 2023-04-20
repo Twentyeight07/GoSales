@@ -84,7 +84,7 @@ function showModal(model = baseModel) {
     $("#txtName").val(model.name)
     $("#txtEmail").val(model.email)
     $("#txtPhone").val(model.phone)
-    $("#cboRole").val(model.roleId == 0 ? $("#cboRole option:first").val() : model.idRole)
+    $("#cboRole").val(model.roleId == 0 ? $("#cboRole option:first").val() : model.roleId)
     $("#cboState").val(model.isActive)
     $("#txtPicture").val("")
     $("#userPicture").attr("src", model.picUrl)
@@ -113,7 +113,7 @@ $("#btnSave").click(function () {
     model["name"] = $("#txtName").val()
     model["email"] = $("#txtEmail").val()
     model["phone"] = $("#txtPhone").val()
-    model["role"] = $("#cboRole").val()
+    model["roleId"] = $("#cboRole").val()
     model["isActive"] = $("#cboState").val()
 
     const pictureInput = document.getElementById("txtPicture");
@@ -144,8 +144,95 @@ $("#btnSave").click(function () {
         }).catch(err => {
             console.log(err);
         })
+    } else {
+        fetch("/Users/Edit", {
+            method: "PUT",
+            body: formData
+        }).then(response => {
+            $("#modalData").find("div.modal-content").LoadingOverlay("hide");
+            return response.ok ? response.json() : Promise.reject(response);
+        }).then(res => {
+            if (res.state) {
+                dataTable.row(selectedRow).data(res.object).draw(false);
+                selectedRow = null;
+                $("#modalData").modal("hide")
+                swal("Listo!", "Se ha modificado el usuario satisfactoriamente", "success")
+            } else {
+                console.log(res)
+                swal("Lo sentimos :(", res.message, "error")
+            }
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
-    /*debugger;*/
+
+})
+
+let selectedRow;
+
+$("#tbdata tbody").on("click", ".btn-editar", function () {
+
+    if ($(this).closest("tr").hasClass("child")) {
+        selectedRow = $(this).closest("tr").prev();
+    } else {
+        selectedRow = $(this).closest("tr");
+
+    }
+
+    const data = dataTable.row(selectedRow).data();
+
+    showModal(data);
+
+})
+
+$("#tbdata tbody").on("click", ".btn-eliminar", function () {
+
+    let row;
+
+    if ($(this).closest("tr").hasClass("child")) {
+        row = $(this).closest("tr").prev();
+    } else {
+        row = $(this).closest("tr");
+
+    }
+
+    const data = dataTable.row(row).data();
+
+    swal({
+        title: "¿Estás seguro?",
+        text: `Eliminar al usuario "${data.name}"`,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Si, eliminar",
+        cancelButtonText: "Cancelar",
+        closeOnConfirm: false,
+        closeOnCancel: true
+    },
+        function (res) {
+            if (res) {
+                $(".showSweetAlert").LoadingOverlay("show")
+
+                fetch(`/Users/Delete?userId=${data.userId}`, {
+                    method: "DELETE"
+                }).then(response => {
+                    $(".showSweetAlert").LoadingOverlay("hide")
+                    return response.ok ? response.json() : Promise.reject(response);
+                }).then(res => {
+                    if (res.state) {
+                        dataTable.row(row).remove().draw(false);
+       
+                        swal("Listo!", "Se ha eliminado el usuario satisfactoriamente", "success")
+                    } else {
+                        console.log(res)
+                        swal("Lo sentimos :(", res.message, "error")
+                    }
+                }).catch(err => {
+                    console.log(err);
+                })
+            }
+        }
+    )
 
 })

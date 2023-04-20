@@ -374,7 +374,7 @@ public partial class SalesDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("email");
-            entity.Property(e => e.IdRole).HasColumnName("idRole");
+            entity.Property(e => e.RoleId).HasColumnName("roleId");
             entity.Property(e => e.IsActive).HasColumnName("isActive");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
@@ -401,8 +401,8 @@ public partial class SalesDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("registryDate");
 
-            entity.HasOne(d => d.IdRoleNavigation).WithMany(p => p.Users)
-                .HasForeignKey(d => d.IdRole)
+            entity.HasOne(d => d.RoleIdNavigation).WithMany(p => p.Users)
+                .HasForeignKey(d => d.RoleId)
                 .HasConstraintName("FK__Users__idRole__4316F928");
         });
 
