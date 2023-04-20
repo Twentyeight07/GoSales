@@ -47,6 +47,12 @@ namespace IOC
 
             // This registers the 'BusinessService' implementation for the 'IBusinessService' interface.
             services.AddScoped<IBusinessService, BusinessService>();
+
+            // This registers the 'CategoryService' implementation for the 'ICategoryService' interface. This allows for specific implementation of CRUD operations and any other business logic related to Categories.
+            services.AddScoped<ICategoryService, CategoryService>();
+
+            // This registers the 'ProductService' implementation for the 'IProductService' interface. This allows for specific implementation of CRUD operations and any other business logic related to Products.
+            services.AddScoped<IProductService, ProductService>();
         }
     }
 }

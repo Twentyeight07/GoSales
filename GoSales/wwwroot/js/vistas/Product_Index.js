@@ -1,25 +1,27 @@
-﻿
-
-const baseModel = {
-    userId: 0,
-    name: "",
-    email: "",
-    phone: "",
-    roleId: 0,
+﻿const baseModel = {
+    productId: 0,
+    barCode: "",
+    brand: "",
+    description: "",
+    categoryId: 0,
+    stock: 0,
+    picUrl: "",
+    price: 0,
     isActive: 1,
-    picUrl: ""
 }
+
+
 
 let dataTable;
 
 $(document).ready(function () {
-    fetch("/Users/RoleList").then(response => {
+    fetch("/Categories/List").then(response => {
         return response.ok ? response.json() : Promise.reject(response);
     }).then(res => {
-        if (res.length > 0) {
-            res.forEach((item) => {
-                $("#cboRole").append(
-                    $("<option>").val(item.roleId).text(item.description)
+        if (res.data.length > 0) {
+            res.data.forEach((item) => {
+                $("#cboCategory").append(
+                    $("<option>").val(item.categoryId).text(item.description)
                 )
             })
         }
@@ -28,48 +30,50 @@ $(document).ready(function () {
 
     dataTable = $('#tbdata').DataTable({
         responsive: true,
-         "ajax": {
-             "url": '/Users/List',
-             "type": "GET",
-             "datatype": "json"
-         },
-         "columns": [
-             { "data": "userId","visible":false,"searchable":false },
-             {
-                 "data": "picUrl", render: function (data) {
-                     return `<img style="height:60px" src=${data} class="rounded mx-auto d-block"/>`
-                 }
-             },
-             { "data": "name" },
-             { "data": "email" },
-             { "data": "phone" },
-             { "data": "roleName" },
-             {
-                 "data": "isActive", render: function (data) {
-                     if (data == 1)
-                         return '<span class="badge badge-info">Activo</span>';
-                     else
-                         return '<span class="badge badge-danger">No Activo</span>';
-                 }
-             },
-             {
-                 "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
-                     '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>',
-                 "orderable": false,
-                 "searchable": false,
-                 "width": "80px"
-             }
-         ],
-         order: [[0, "desc"]],
+        "ajax": {
+            "url": '/Products/List',
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columns": [
+            { "data": "productId", "visible": false, "searchable": false },
+            {
+                "data": "picUrl", render: function (data) {
+                    return `<img style="height:60px" src=${data} class="rounded mx-auto d-block"/>`
+                }
+            },
+            { "data": "barCode" },
+            { "data": "brand" },
+            { "data": "description" },
+            { "data": "categoryName" },
+            { "data": "stock" },
+            { "data": "price" },
+            {
+                "data": "isActive", render: function (data) {
+                    if (data == 1)
+                        return '<span class="badge badge-info">Activo</span>';
+                    else
+                        return '<span class="badge badge-danger">No Activo</span>';
+                }
+            },
+            {
+                "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
+                    '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>',
+                "orderable": false,
+                "searchable": false,
+                "width": "80px"
+            }
+        ],
+        order: [[0, "desc"]],
         dom: "Bfrtip",
         buttons: [
             {
                 text: 'Exportar Excel',
                 extend: 'excelHtml5',
                 title: '',
-                filename: 'Reporte Usuarios',
+                filename: 'Reporte Productos',
                 exportOptions: {
-                    columns: [2,3,4,5,6]
+                    columns: [2, 3, 4, 5, 6]
                 }
             }, 'pageLength'
         ],
@@ -80,24 +84,27 @@ $(document).ready(function () {
 })
 
 
-
-
 function showModal(model = baseModel) {
-    $("#txtId").val(model.userId)
-    $("#txtName").val(model.name)
-    $("#txtEmail").val(model.email)
-    $("#txtPhone").val(model.phone)
-    $("#cboRole").val(model.roleId == 0 ? $("#cboRole option:first").val() : model.roleId)
+    $("#txtId").val(model.productId)
+    $("#txtBarCode").val(model.barCode)
+    $("#txtBrand").val(model.brand)
+    $("#txtDescription").val(model.description)
+    $("#cboCategory").val(model.categoryId == 0 ? $("#cboCategory option:first").val() : model.categoryId)
+    $("#txtStock").val(model.stock)
+    $("#txtPrice").val(model.price)
     $("#cboState").val(model.isActive)
     $("#txtPicture").val("")
-    $("#userPicture").attr("src", model.picUrl)
+    $("#imgProduct").attr("src", model.picUrl)
 
     $("#modalData").modal("show")
 }
 
+
 $("#btnNew").click(function () {
     showModal()
 })
+
+
 
 $("#btnSave").click(function () {
 
@@ -112,11 +119,13 @@ $("#btnSave").click(function () {
     }
 
     const model = structuredClone(baseModel);
-    model["userId"] = parseInt($("#txtId").val())
-    model["name"] = $("#txtName").val()
-    model["email"] = $("#txtEmail").val()
-    model["phone"] = $("#txtPhone").val()
-    model["roleId"] = $("#cboRole").val()
+    model["productId"] = parseInt($("#txtId").val())
+    model["barCode"] = $("#txtBarCode").val()
+    model["brand"] = $("#txtBrand").val()
+    model["description"] = $("#txtDescription").val()
+    model["categoryId"] = $("#cboCategory").val()
+    model["stock"] = $("#txtStock").val()
+    model["price"] = $("#txtPrice").val()
     model["isActive"] = $("#cboState").val()
 
     const pictureInput = document.getElementById("txtPicture");
@@ -128,8 +137,8 @@ $("#btnSave").click(function () {
 
     $("#modalData").find("div.modal-content").LoadingOverlay("show");
 
-    if (model.userId == 0) {
-        fetch("/Users/Create", {
+    if (model.productId == 0) {
+        fetch("/Products/Create", {
             method: "POST",
             body: formData
         }).then(response => {
@@ -139,7 +148,7 @@ $("#btnSave").click(function () {
             if (res.state) {
                 dataTable.row.add(res.object).draw(false)
                 $("#modalData").modal("hide")
-                swal("Listo!", "Se ha creado el usuario satisfactoriamente", "success")
+                swal("Listo!", "Se ha creado el producto satisfactoriamente", "success")
             } else {
                 swal("Lo sentimos :(", res.message, "error")
             }
@@ -147,18 +156,19 @@ $("#btnSave").click(function () {
             console.log(err);
         })
     } else {
-        fetch("/Users/Edit", {
+        fetch("/Products/Edit", {
             method: "PUT",
             body: formData
         }).then(response => {
             $("#modalData").find("div.modal-content").LoadingOverlay("hide");
             return response.ok ? response.json() : Promise.reject(response);
         }).then(res => {
+            console.log(pictureInput.value, pictureInput.files[0])
             if (res.state) {
                 dataTable.row(selectedRow).data(res.object).draw(false);
                 selectedRow = null;
                 $("#modalData").modal("hide")
-                swal("Listo!", "Se ha modificado el usuario satisfactoriamente", "success")
+                swal("Listo!", "Se ha modificado el producto satisfactoriamente", "success")
             } else {
                 console.log(res)
                 swal("Lo sentimos :(", res.message, "error")
@@ -206,7 +216,7 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
 
     swal({
         title: "¿Estás seguro?",
-        text: `Eliminar al usuario "${data.name}"`,
+        text: `Eliminar el producto "${data.description}"`,
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
@@ -219,7 +229,7 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
             if (res) {
                 $(".showSweetAlert").LoadingOverlay("show")
 
-                fetch(`/Users/Delete?userId=${data.userId}`, {
+                fetch(`/Products/Delete?ProductId=${data.productId}`, {
                     method: "DELETE"
                 }).then(response => {
                     $(".showSweetAlert").LoadingOverlay("hide")
@@ -227,8 +237,8 @@ $("#tbdata tbody").on("click", ".btn-eliminar", function () {
                 }).then(res => {
                     if (res.state) {
                         dataTable.row(row).remove().draw(false);
-       
-                        swal("Listo!", "Se ha eliminado el usuario satisfactoriamente", "success")
+
+                        swal("Listo!", "Se ha eliminado el producto satisfactoriamente", "success")
                     } else {
                         console.log(res)
                         swal("Lo sentimos :(", res.message, "error")
