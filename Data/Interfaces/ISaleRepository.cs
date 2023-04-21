@@ -9,7 +9,7 @@ namespace Data.Interfaces
 {
     public interface ISaleRepository:IGenericRepository<Sale>
     {
-        Task<Sale> Registry(Sale entity);
+        Task<Sale> Record(Sale entity);
         Task<List<SaleDetail>> Report(DateTime StartDate, DateTime EndDate);
     }
 }

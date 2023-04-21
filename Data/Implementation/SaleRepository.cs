@@ -19,7 +19,7 @@ namespace Data.Implementation
             _dbContext = dbContext;
         }
 
-        public async Task<Sale> Registry(Sale entity)
+        public async Task<Sale> Record(Sale entity)
         {
             Sale generatedSale = new Sale();
 
@@ -59,7 +59,7 @@ namespace Data.Implementation
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw ex;
+                    throw;
                 }
             }
 

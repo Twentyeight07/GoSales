@@ -141,7 +141,7 @@ public partial class SalesDbContext : DbContext
             entity.Property(e => e.DigitsQuantity).HasColumnName("digitsQuantity");
             entity.Property(e => e.UpdateDate)
                 .HasColumnType("datetime")
-                .HasColumnName("fechaActualizacion");
+                .HasColumnName("UpdateDate");
             entity.Property(e => e.LastNumber).HasColumnName("lastNumber");
             entity.Property(e => e.Management)
                 .HasMaxLength(100)

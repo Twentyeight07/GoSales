@@ -53,6 +53,12 @@ namespace IOC
 
             // This registers the 'ProductService' implementation for the 'IProductService' interface. This allows for specific implementation of CRUD operations and any other business logic related to Products.
             services.AddScoped<IProductService, ProductService>();
+
+            // This registers the 'SaleDocTypeService' implementation for the 'ISaleDocTypeService' interface. This allows consult of the Sale Doc Type.
+            services.AddScoped<ISaleDocTypeService, SaleDocTypeService>();
+
+            // This registers the 'SaleService' implementation for the 'ISaleService' interface. This allows for specific implementation of CRUD operations and any other business logic related to Sales.
+            services.AddScoped<ISaleService, SaleService>();
         }
     }
 }
