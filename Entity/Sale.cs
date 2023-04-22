@@ -25,7 +25,7 @@ public partial class Sale
 
     public DateTime? RegistryDate { get; set; }
 
-    public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
+    public virtual ICollection<SaleDetail> SaleDetail { get; set; } = new List<SaleDetail>();
 
     public virtual SaleDocType? SaleDocType { get; set; }
 

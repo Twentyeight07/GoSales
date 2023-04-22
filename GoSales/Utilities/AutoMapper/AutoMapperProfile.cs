@@ -41,13 +41,13 @@ namespace GoSales.Utilities.AutoMapper
             CreateMap<Business, VMBusiness>()
                 .ForMember(dest =>
                 dest.TaxRate,
-                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.TaxRate, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.TaxRate, new CultureInfo("es-US")))
                 );
 
             CreateMap<VMBusiness, Business>()
                 .ForMember(dest =>
                 dest.TaxRate,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.TaxRate, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.TaxRate, new CultureInfo("es-US")))
                 );
 
             #endregion
@@ -79,7 +79,7 @@ namespace GoSales.Utilities.AutoMapper
                 )
                 .ForMember(dest =>
                 dest.Price,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.Price.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.Price.Value, new CultureInfo("es-US")))
                 );
 
             CreateMap<VMProduct, Product>()
@@ -93,7 +93,7 @@ namespace GoSales.Utilities.AutoMapper
                 )
                 .ForMember(dest =>
                 dest.Price,
-                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.Price, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.Price, new CultureInfo("es-US")))
                 );
 
             #endregion
@@ -115,15 +115,15 @@ namespace GoSales.Utilities.AutoMapper
                 )
                 .ForMember(dest =>
                 dest.SubTotal,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.SubTotal.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.SubTotal.Value, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.TotalTax,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.TotalTax.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.TotalTax.Value, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.Total,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.Total.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.Total.Value, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.RegistryDate,
@@ -133,15 +133,15 @@ namespace GoSales.Utilities.AutoMapper
             CreateMap<VMSale, Sale>()
                 .ForMember(dest =>
                 dest.SubTotal,
-                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.SubTotal, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.SubTotal, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.TotalTax,
-                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.TotalTax, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.TotalTax, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.Total,
-                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.Total, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.Total, new CultureInfo("es-US")))
                 );
 
             #endregion
@@ -150,21 +150,21 @@ namespace GoSales.Utilities.AutoMapper
             CreateMap<SaleDetail, VMSaleDetail>()
                 .ForMember(dest =>
                 dest.Price,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.Price.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.Price.Value, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.Total,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.Total.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.Total.Value, new CultureInfo("es-US")))
                 );
 
             CreateMap<VMSaleDetail, SaleDetail>()
                 .ForMember(dest =>
                 dest.Price,
-                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.Price, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.Price, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.Total,
-                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.Total, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToDecimal(origin.Total, new CultureInfo("es-US")))
                 );
 
             CreateMap<SaleDetail, VMSaleReport>()
@@ -190,15 +190,15 @@ namespace GoSales.Utilities.AutoMapper
                 )
                 .ForMember(dest =>
                 dest.SaleSubTotal,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.Sale.SubTotal.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.Sale.SubTotal.Value, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.TotalSalesTax,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.Sale.TotalTax.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.Sale.TotalTax.Value, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.TotalSale,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.Sale.Total.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.Sale.Total.Value, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.Product,
@@ -206,11 +206,11 @@ namespace GoSales.Utilities.AutoMapper
                 )
                 .ForMember(dest =>
                 dest.Price,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.Price.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.Price.Value, new CultureInfo("es-US")))
                 )
                 .ForMember(dest =>
                 dest.Total,
-                opt => opt.MapFrom(origin => Convert.ToString(origin.Total.Value, new CultureInfo("es-VE")))
+                opt => opt.MapFrom(origin => Convert.ToString(origin.Total.Value, new CultureInfo("es-US")))
                 );
 
             #endregion

@@ -50,7 +50,7 @@ namespace GoSales.Controllers
         [HttpPost]
         public async Task<IActionResult> RecordSale([FromBody] VMSale model)
         {
-            GenericResponse<VMSale> gResponse = new GenericResponse<VMSale>();
+            GenericResponse<VMSale> gResponse = new();
 
             try
             {
@@ -74,9 +74,9 @@ namespace GoSales.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> History(string saleNumber, string starDate, string endDate)
+        public async Task<IActionResult> History(string saleNumber, string startDate, string endDate)
         {
-            List<VMSale> vmSaleHistory = _mapper.Map<List<VMSale>>(await _saleService.History(saleNumber, starDate, endDate));
+            List<VMSale> vmSaleHistory = _mapper.Map<List<VMSale>>(await _saleService.History(saleNumber, startDate, endDate));
 
             return StatusCode(StatusCodes.Status200OK, vmSaleHistory);
         }

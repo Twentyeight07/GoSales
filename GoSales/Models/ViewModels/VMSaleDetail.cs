@@ -1,5 +1,4 @@
-﻿using Entity;
-
+﻿
 namespace GoSales.Models.ViewModels
 {
     public class VMSaleDetail

@@ -34,7 +34,7 @@ public partial class SalesDbContext : DbContext
 
     public virtual DbSet<Sale> Sale { get; set; }
 
-    public virtual DbSet<SaleDetail> SaleDetails { get; set; }
+    public virtual DbSet<SaleDetail> SaleDetail { get; set; }
 
     public virtual DbSet<SaleDocType> SaleDocTypes { get; set; }
 
@@ -342,7 +342,7 @@ public partial class SalesDbContext : DbContext
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("total");
 
-            entity.HasOne(d => d.Sale).WithMany(p => p.SaleDetails)
+            entity.HasOne(d => d.Sale).WithMany(p => p.SaleDetail)
                 .HasForeignKey(d => d.SaleId)
                 .HasConstraintName("FK__SaleDetai__saleI__571DF1D5");
         });

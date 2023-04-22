@@ -98,7 +98,7 @@ namespace Domain.Implementation
 
                 return created_user;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

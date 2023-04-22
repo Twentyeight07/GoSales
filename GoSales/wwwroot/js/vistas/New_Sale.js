@@ -136,17 +136,17 @@ $("#cboSearchProducts").on("select2:select", function (e) {
             }
 
             let product = {
-                id: data.id,
-                brand: data.brand,
-                description: data.text,
-                category: data.category,
+                productId: data.id,
+                productBrand: data.brand,
+                productDescription: data.text,
+                productCategory: data.category,
                 quantity: parseInt(value),
                 price: data.price.toString(),
                 total: (parseFloat(value) * data.price).toString()
-            };
-
+            }
+            console.log("product:", product)
             productsToSale.push(product); 
-
+            console.log(productsToSale);
             showProductPrices();
             $("#cboSearchProducts").val("").trigger("change")
             swal.close();
@@ -168,15 +168,14 @@ function showProductPrices() {
 
     productsToSale.forEach((item) => {
         total = total + parseFloat(item.total);
-
         $("#tbProduct tbody").append(
             $("<tr>").append(
                 $("<td>").append(
                     $("<button>").addClass("btn btn-danger btn-eliminar btn-sm").append(
                         $("<i>").addClass("fas fa-trash-alt")
-                    ).data("id", item.id)
+                    ).data("id", item.productId)
                 ),
-                $("<td>").text(item.description),
+                $("<td>").text(item.productDescription),
                 $("<td>").text(item.quantity),
                 $("<td>").text(item.price),
                 $("<td>").text(item.total)
@@ -195,8 +194,7 @@ function showProductPrices() {
 
 $(document).on("click","button.btn-eliminar", function () {
     const _productId = $(this).data("id")
-    console.log(productsToSale);
-    productsToSale = productsToSale.filter(p => p.id != _productId);
+    productsToSale = productsToSale.filter(p => p.productId != _productId);
 
     showProductPrices();
 
@@ -221,7 +219,7 @@ $("#btnEndSale").click(function () {
         total: $("#txtTotal").val(),
         saleDetail: vmSaleDetail
     }
-
+    
     $("#btnEndSale").LoadingOverlay("show");
 
     fetch("/Sale/RecordSale", {

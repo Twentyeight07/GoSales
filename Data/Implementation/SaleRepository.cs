@@ -21,15 +21,15 @@ namespace Data.Implementation
 
         public async Task<Sale> Record(Sale entity)
         {
-            Sale generatedSale = new Sale();
+            Sale generatedSale = new();
 
             using(var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    foreach(SaleDetail sd in entity.SaleDetails)
+                    foreach(SaleDetail sd in entity.SaleDetail)
                     {
-                        Product product_found = _dbContext.Products.Where(p=> p.ProductId == sd.ProductId).FirstOrDefault();
+                        Product product_found = _dbContext.Products.Where(p=> p.ProductId == sd.ProductId).First();
 
                         product_found.Stock = product_found.Stock - sd.Quantity;
                         _dbContext.Products.Update(product_found);
@@ -56,7 +56,7 @@ namespace Data.Implementation
 
                     transaction.Commit();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     transaction.Rollback();
                     throw;
@@ -68,14 +68,8 @@ namespace Data.Implementation
 
         public async Task<List<SaleDetail>> Report(DateTime StartDate, DateTime EndDate)
         {
-            /*List<SaleDetail> resumeList = await _dbContext.SaleDetails
-                .Include(s => s.SaleId)
-                .ThenInclude(u => u.UserId)
-                .Include(s => s.SaleIdNavigation)
-                .ThenInclude(sdt => sdt.SaleDocTypeIdNavigation)
-                .Where(sd => sd.SaleIdNavigation.RegistryDate.Value.Date >= StartDate.Date && sd.SaleIdNavigation.RegistryDate.Value.Date <= EndDate.Date).ToListAsync();*/
 
-            List<SaleDetail> resumeList = await _dbContext.SaleDetails
+            List<SaleDetail> resumeList = await _dbContext.SaleDetail
     .Include(s => s.Sale)
         .ThenInclude(u => u.User)
     .Include(s => s.Sale)

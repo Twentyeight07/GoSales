@@ -49,14 +49,14 @@ namespace Domain.Implementation
 
             if(startDate != "" && endDate != "")
             {
-                DateTime start_date = DateTime.ParseExact(startDate, "dd/MM/yyyy", new CultureInfo("es-VE"));
-                DateTime end_date = DateTime.ParseExact(endDate, "dd/MM/yyyy", new CultureInfo("es-VE"));
+                DateTime start_date = DateTime.ParseExact(startDate, "dd/MM/yyyy", new CultureInfo("es-US"));
+                DateTime end_date = DateTime.ParseExact(endDate, "dd/MM/yyyy", new CultureInfo("es-US"));
 
-                return query.Where(s => s.RegistryDate.Value.Date >= start_date && s.RegistryDate.Value.Date <= end_date).Include(sdt => sdt.SaleDocType).Include(u => u.User).Include(sd => sd.SaleDetails).ToList();
+                return query.Where(s => s.RegistryDate.Value.Date >= start_date && s.RegistryDate.Value.Date <= end_date).Include(sdt => sdt.SaleDocType).Include(u => u.User).Include(sd => sd.SaleDetail).ToList();
             }
             else
             {
-                return query.Where(s => s.SaleNumber == saleNumber).Include(sdt => sdt.SaleDocType).Include(u => u.User).Include(sd => sd.SaleDetails).ToList();
+                return query.Where(s => s.SaleNumber == saleNumber).Include(sdt => sdt.SaleDocType).Include(u => u.User).Include(sd => sd.SaleDetail).ToList();
             }
 
         }
@@ -65,13 +65,13 @@ namespace Domain.Implementation
         {
             IQueryable<Sale> query = await _saleRepository.Consult(v => v.SaleNumber == saleNumber);
 
-            return query.Include(sdt => sdt.SaleDocType).Include(u => u.User).Include(sd => sd.SaleDetails).First();
+            return query.Include(sdt => sdt.SaleDocType).Include(u => u.User).Include(sd => sd.SaleDetail).First();
         }
 
         public async Task<List<SaleDetail>> SaleReport(string startDate, string endDate)
         {
-            DateTime start_date = DateTime.ParseExact(startDate, "dd/MM/yyyy", new CultureInfo("es-VE"));
-            DateTime end_date = DateTime.ParseExact(endDate, "dd/MM/yyyy", new CultureInfo("es-VE"));
+            DateTime start_date = DateTime.ParseExact(startDate, "dd/MM/yyyy", new CultureInfo("es-US"));
+            DateTime end_date = DateTime.ParseExact(endDate, "dd/MM/yyyy", new CultureInfo("es-US"));
 
             List<SaleDetail> list = await _saleRepository.Report(start_date, end_date);
 

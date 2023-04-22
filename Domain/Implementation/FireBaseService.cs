@@ -47,7 +47,7 @@ namespace Domain.Implementation
 
                 PicUrl = await task;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 PicUrl = "";
             }
