@@ -4,6 +4,8 @@ using GoSales.Models.ViewModels;
 using GoSales.Utilities.Response;
 using Domain.Interfaces;
 using Entity;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 
 namespace GoSales.Controllers
 {
@@ -12,12 +14,14 @@ namespace GoSales.Controllers
         private readonly IMapper _mapper;
         private readonly ISaleDocTypeService _saleDocTypeService;
         private readonly ISaleService _saleService;
+        private readonly IConverter _converter;
 
-        public SaleController(IMapper mapper, ISaleDocTypeService saleDocTypeService, ISaleService saleService)
+        public SaleController(IMapper mapper, ISaleDocTypeService saleDocTypeService, ISaleService saleService, IConverter converter)
         {
             _mapper = mapper;
             _saleDocTypeService = saleDocTypeService;
             _saleService = saleService;
+            _converter = converter;
         }
 
         public IActionResult NewSale()
@@ -79,6 +83,31 @@ namespace GoSales.Controllers
             List<VMSale> vmSaleHistory = _mapper.Map<List<VMSale>>(await _saleService.History(saleNumber, startDate, endDate));
 
             return StatusCode(StatusCodes.Status200OK, vmSaleHistory);
+        }
+
+        public IActionResult ShowSalePDF(string saleNumber)
+        {
+            string templateUrlView = $"{this.Request.Scheme}://{this.Request.Host}/Template/SalePDF?saleNumber={saleNumber}";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait
+                },
+                Objects =
+                {
+                    new ObjectSettings(){
+                        Page = templateUrlView
+                    }
+                }
+            };
+
+            var pdfFile = _converter.Convert(pdf);
+
+            return File(pdfFile, "application/pdf");
+
         }
     }
 }

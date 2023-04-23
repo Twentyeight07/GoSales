@@ -124,7 +124,8 @@ $("#tbSale tbody").on("click", ".btn-info", function () {
             )
         )
     })
-    
+
+    $("#linkPrint").attr("href", `/Sale/ShowSalePDF?saleNumber=${d.saleNumber}`)
 
     $("#modalData").modal("show");
 

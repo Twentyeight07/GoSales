@@ -1,5 +1,8 @@
 using GoSales.Utilities.AutoMapper;
 using IOC;
+using GoSales.Utilities.Extensions;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,10 @@ builder.Services.InjectDependency(builder.Configuration);
 
 // With this line, we inject the AutoMapper dependency to use it in all the web application
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+var context = new CustomAssemblyLoadContext();
+context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "Utilities/PDFLibrary/libwkhtmltox"));
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 var app = builder.Build();
 
