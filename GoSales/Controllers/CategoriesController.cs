@@ -4,12 +4,13 @@ using GoSales.Models.ViewModels;
 using GoSales.Utilities.Response;
 using Domain.Interfaces;
 using Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoSales.Controllers
 {
+        [Authorize]
     public class CategoriesController : Controller
     {
-
         private readonly IMapper _mapper;
         private readonly ICategoryService _categoryService;
 

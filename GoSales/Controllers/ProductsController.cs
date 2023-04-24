@@ -5,9 +5,12 @@ using GoSales.Models.ViewModels;
 using GoSales.Utilities.Response;
 using Domain.Interfaces;
 using Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoSales.Controllers
 {
+    [Authorize]
+
     public class ProductsController : Controller
     {
         private readonly IMapper _mapper;

@@ -3,9 +3,12 @@ using AutoMapper;
 using GoSales.Models.ViewModels;
 using Domain.Interfaces;
 using Domain.Implementation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoSales.Controllers
 {
+    [Authorize]
+
     public class ReportsController : Controller
     {
         private readonly IMapper _mapper;

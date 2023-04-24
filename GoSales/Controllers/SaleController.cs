@@ -6,9 +6,12 @@ using Domain.Interfaces;
 using Entity;
 using DinkToPdf;
 using DinkToPdf.Contracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoSales.Controllers
 {
+    [Authorize]
+
     public class SaleController : Controller
     {
         private readonly IMapper _mapper;

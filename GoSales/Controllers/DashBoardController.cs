@@ -2,9 +2,12 @@
 using GoSales.Models.ViewModels;
 using GoSales.Utilities.Response;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoSales.Controllers
 {
+    [Authorize]
+
     public class DashBoardController : Controller
     {
         private readonly IDashBoardService _dashboardService;
