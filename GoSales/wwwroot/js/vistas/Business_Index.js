@@ -9,7 +9,6 @@ $(document).ready(function () {
     }).then(res => {
         if (res) {
             const d = res.object;
-            console.log(res);
 
             $("#txtDocNumber").val(d.docNumber)
             $("#txtBusinessName").val(d.name)
@@ -67,7 +66,6 @@ $("#btnSaveChanges").click(function () {
         return response.ok ? response.json() : Promise.reject(response);
     }).then(res => {
         if (res) {
-            console.log(res);
             const d = res.object;
 
             $("#imgLogo").attr("src",d.logoUrl)

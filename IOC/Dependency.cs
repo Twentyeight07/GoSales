@@ -59,6 +59,9 @@ namespace IOC
 
             // This registers the 'SaleService' implementation for the 'ISaleService' interface. This allows for specific implementation of CRUD operations and any other business logic related to Sales.
             services.AddScoped<ISaleService, SaleService>();
+
+            // This registers the 'DashBoardService' implementation for the 'IDashBoardService' interface. This allows for specific implementation of Consult operations and any other business logic related to the DashBoard.
+            services.AddScoped<IDashBoardService, DashBoardService>();
         }
     }
 }

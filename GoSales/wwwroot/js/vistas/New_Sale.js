@@ -144,9 +144,7 @@ $("#cboSearchProducts").on("select2:select", function (e) {
                 price: data.price.toString(),
                 total: (parseFloat(value) * data.price).toString()
             }
-            console.log("product:", product)
             productsToSale.push(product); 
-            console.log(productsToSale);
             showProductPrices();
             $("#cboSearchProducts").val("").trigger("change")
             swal.close();

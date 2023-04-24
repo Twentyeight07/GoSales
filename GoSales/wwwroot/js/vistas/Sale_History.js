@@ -99,7 +99,6 @@ $("#btnSearch").click(function () {
 
 $("#tbSale tbody").on("click", ".btn-info", function () {
     let d = $(this).data("sale");
-    console.log(d)
 
     $("#txtRecordDate").val(d.registryDate)
     $("#txtSaleNum").val(d.saleNumber)

@@ -107,7 +107,6 @@ $("#btnSave").click(function () {
             console.log(err);
         })
     } else {
-        console.log(model)
         fetch("/Categories/Edit", {
             method: "PUT",
             headers: { "Content-type": "application/json; charset=utf-8" },
