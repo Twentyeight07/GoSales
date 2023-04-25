@@ -62,6 +62,9 @@ namespace IOC
 
             // This registers the 'DashBoardService' implementation for the 'IDashBoardService' interface. This allows for specific implementation of Consult operations and any other business logic related to the DashBoard.
             services.AddScoped<IDashBoardService, DashBoardService>();
+
+            // This registers the 'MenuService' implementation for the 'IMenuService' interface. This allows the user to access only to the menus he's supose to access.
+            services.AddScoped<IMenuService, MenuService>();
         }
     }
 }

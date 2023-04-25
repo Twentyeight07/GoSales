@@ -7,6 +7,7 @@ using Entity;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace GoSales.Controllers
 {
@@ -61,8 +62,11 @@ namespace GoSales.Controllers
 
             try
             {
-                // Change this later!!!!
-                model.UserId = 31;
+                ClaimsPrincipal claimUser = HttpContext.User;
+
+                string userId = claimUser.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).FirstOrDefault();
+
+                model.UserId = int.Parse(userId);
 
                 Sale createdSale = await _saleService.Record(_mapper.Map<Sale>(model));
                 model = _mapper.Map<VMSale>(createdSale);

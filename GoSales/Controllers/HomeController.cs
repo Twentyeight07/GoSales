@@ -50,7 +50,9 @@ namespace GoSales.Controllers
             {
                 ClaimsPrincipal claimUser = HttpContext.User;
 
-                string userId = claimUser.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).FirstOrDefault();
+                string userId = claimUser.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
+                    .Select(c => c.Value)
+                    .FirstOrDefault();
 
                 VMUser user = _mapper.Map<VMUser>(await _userService.GetById(int.Parse(userId)));
 

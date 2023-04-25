@@ -1,0 +1,45 @@
+﻿@using GoSales.Models.ViewModels;
+@model List<VMMenu>;
+
+@{
+    string menucollapse = "menucollapse";
+    int correlative = 1;
+}
+
+
+@foreach (var menu in Model)
+{
+
+    if (menu.SubMenus.Count == 0)
+    {
+        <li class="nav-item">
+            <a class="nav-link" href="@($"/{menu.Controller}/{menu.ActionPage}")">
+                <i class="@menu.Icon"></i>
+                <span>@menu.Description</span>
+            </a>
+        </li>
+    }
+    else
+    {
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="@($"#{menucollapse}{correlative}")">
+                <i class="@menu.Icon"></i>
+                <span>@menu.Description</span>
+            </a>
+
+            <div id="@($"{menucollapse}{correlative}")" class="collapse" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    @foreach (var submenu in menu.SubMenus)
+                    {
+                        <a class="collapse-item" href="@($"/{submenu.Controller}/{submenu.ActionPage}")">
+                            @submenu.Description
+                        </a>
+                    }
+                </div>
+            </div>
+
+        </li>
+        correlative = correlative + 1;
+    }
+}
