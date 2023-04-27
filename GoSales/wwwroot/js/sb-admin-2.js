@@ -1,5 +1,26 @@
 (function($) {
-  "use strict"; // Start of use strict
+    "use strict"; // Start of use strict
+
+  // Initialization for the theme
+    $(document).ready(function () {
+        let darkTheme = localStorage.getItem("theme");
+
+        if (darkTheme == undefined) {
+            localStorage.setItem("theme", "light");
+        } else if (darkTheme == "light") {
+            $("#btn-dark-theme").removeClass("fa-moon")
+            $("#btn-dark-theme").addClass("fa-sun")
+
+            ChangeTheme();
+        } else if (darkTheme == "dark") {
+            $("#btn-dark-theme").removeClass("fa-sun")
+            $("#btn-dark-theme").addClass("fa-moon")
+
+            ChangeTheme();
+        }
+
+
+   })
 
   // Toggle the side navigation
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
@@ -52,5 +73,55 @@
     }, 1000, 'easeInOutExpo');
     e.preventDefault();
   });
+
+    // Dark Theme
+    $("#btn-dark-theme").click(function () {
+        ChangeTheme();
+
+    });
+
+    function ChangeTheme() {
+
+        if ($("#btn-dark-theme").hasClass("fa-moon")) {
+            let bodyCards = document.querySelectorAll(".card-body");
+
+            localStorage.setItem("theme", "dark");
+
+            $("#btn-dark-theme").removeClass("fa-moon");
+            $("#btn-dark-theme").addClass("fa-sun");
+
+            $("#content").addClass("dark-content");
+            $("#accordionSidebar").addClass("dark-menu");
+            $("#lay-footer").addClass("dark-footer");
+            $("#navbar").addClass("dark-nav");
+            $(".card").addClass("border-0").addClass("dark-cards-body");
+            $(".card-header").addClass("border-0");
+            $(".table").addClass("border-0").addClass("dark-cards-body");
+            $(".card-body").addClass("dark-cards-body");
+            $(".card-header").addClass("bg-gradient-dark");
+            $(".modal-content").addClass("dark-cards-body")
+            $(".dt-button").addClass("text-white");
+
+        } else {
+            localStorage.setItem("theme", "light");
+
+            $("#btn-dark-theme").removeClass("fa-sun");
+            $("#btn-dark-theme").addClass("fa-moon");
+
+            $("#content").removeClass("dark-content");
+            $("#accordionSidebar").removeClass("dark-menu");
+            $("#lay-footer").removeClass("dark-footer");
+            $("#navbar").removeClass("dark-nav");
+            $(".card").removeClass("border-0").removeClass("dark-cards-body");
+            $(".card-header").removeClass("border-0");
+            $(".table").removeClass("border-0").removeClass("bg-gradient-dark");
+            $(".card-body").removeClass("dark-cards-body");
+            $(".card-header").removeClass("bg-gradient-dark");
+            $(".modal-content").removeClass("dark-cards-body")
+            $(".dt-button").removeClass("text-white");
+
+        }
+
+    }
 
 })(jQuery); // End of use strict

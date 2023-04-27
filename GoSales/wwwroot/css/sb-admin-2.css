@@ -9946,8 +9946,9 @@ a:focus {
 } */
 
 .bg-gradient-primary {
-  background-color: #004A93;
-  background-size: cover;
+    background-color: #224abe;
+    background-image: linear-gradient(180deg, #224abe 10%, #C9D6DF 100%);
+    background-size: cover;
 }
 
 .bg-second-primary{
@@ -11031,6 +11032,42 @@ form.user .btn-user {
   line-height: 1;
   width: 12.5rem;
 }
+
+/**************************** CUSTOM STYLES ******************************/
+
+.dark-menu {
+    background-color: #4E4E4E;
+    background-image: linear-gradient(180deg, #BA5D4C 10%, #2F3C48 100%);
+    background-size: cover;
+}
+
+.dark-content {
+    background-color: #373840;
+    background-image: linear-gradient(180deg, #373840 10%, #5a5c69 100%);
+    color: #C9D6DF;
+}
+
+.dark-footer {
+    background-color: #5a5c69;
+    background-image: linear-gradient(180deg, #5a5c69 10%, #373840 100%);
+    color: #C9D6DF;
+}
+
+.dark-nav {
+    background-color: #4E4E4E;
+    background-image: linear-gradient(120deg, #BA5D4C 10%, #373840 100%);
+    background-size: cover;
+}
+
+.dark-cards-body {
+    background-color: #2F3C48;
+    color: #ECEEEC;
+}
+
+
+
+
+/*************************************************************************/
 
 @-webkit-keyframes noise-anim {
   0% {
