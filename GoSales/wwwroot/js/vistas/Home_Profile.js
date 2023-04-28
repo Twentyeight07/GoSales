@@ -1,7 +1,5 @@
 ﻿
 
-
-
 $(document).ready(function () {
 
     $(".container-fluid").LoadingOverlay("show");
@@ -11,6 +9,7 @@ $(document).ready(function () {
         return response.ok ? response.json() : Promise.reject(response);
     }).then(res => {
         if (res) {
+            console.log("Hola")
             const d = res.object;
 
             $("#imgFoto").attr("src", d.picUrl)
@@ -19,13 +18,11 @@ $(document).ready(function () {
             $("#txtEmail").val(d.email)
             $("#txtPhone").val(d.phone)
             $("#txtRole").val(d.roleName)
-            
+
         } else {
             swal("Lo sentimos :(", res.message, "error")
         }
-    })
-
-
+    });
 })
 
 

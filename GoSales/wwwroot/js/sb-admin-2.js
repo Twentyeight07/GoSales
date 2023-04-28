@@ -20,6 +20,25 @@
         }
 
 
+        fetch("/Home/GetNotifications").then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        }).then(res => {
+            let data = res.data;
+            console.log(data)
+
+            data.forEach((notif) => {
+                let noti = ` <a class="dropdown-item text-wrap" href="#">${notif.message}  <small>${notif.createdAt}</small></a>`
+                $("#notificationList").append(noti);
+            })
+
+            let d = `<div class="dropdown-divider"></div>`;
+            let seeAll = `<a class="dropdown-item text-wrap" href="#">Ver todas las notificaciones</a>`
+
+            $("#notificationList").append(d).append(seeAll);
+                            
+            
+        })
+
    })
 
   // Toggle the side navigation
@@ -123,5 +142,6 @@
         }
 
     }
+
 
 })(jQuery); // End of use strict

@@ -223,6 +223,16 @@ namespace GoSales.Utilities.AutoMapper
                 );
 
             #endregion
+
+            #region Notifications
+            CreateMap<Notification, VMNotification>()
+                .ForMember(dest =>
+                dest.CreatedAt,
+                opt => opt.MapFrom(origin => origin.CreatedAt.Value.ToString("dd/MM/yyyy"))
+                );
+
+            #endregion
+
         }
     }
 }

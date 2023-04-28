@@ -11,6 +11,7 @@ using GoSales.Utilities.Response;
 using Domain.Interfaces;
 using Entity;
 using Firebase.Auth;
+using Domain.Implementation;
 
 namespace GoSales.Controllers
 {
@@ -19,12 +20,14 @@ namespace GoSales.Controllers
     public class HomeController : Controller
     {
         private readonly IUserService _userService;
+        private readonly INotificationService _notificationService;
         private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger, IUserService userService, IMapper mapper)
+        public HomeController(ILogger<HomeController> logger, IUserService userService, IMapper mapper, INotificationService notificationService)
         {
             _userService = userService;
             _mapper = mapper;
+            _notificationService = notificationService;
         }
 
         public IActionResult Index()
@@ -32,14 +35,16 @@ namespace GoSales.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Profile()
         {
             return View();
         }
 
-        public IActionResult Profile()
+        [HttpGet]
+        public async Task<IActionResult> GetNotifications()
         {
-            return View();
+            List<VMNotification> vmNotification = _mapper.Map<List<VMNotification>>(await _notificationService.List());
+            return StatusCode(StatusCodes.Status200OK, new { data = vmNotification });
         }
 
         [HttpGet]

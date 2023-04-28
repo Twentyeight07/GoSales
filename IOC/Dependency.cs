@@ -65,6 +65,9 @@ namespace IOC
 
             // This registers the 'MenuService' implementation for the 'IMenuService' interface. This allows the user to access only to the menus he's supose to access.
             services.AddScoped<IMenuService, MenuService>();
+
+
+            services.AddScoped<INotificationService, NotificationService>();
         }
     }
 }

@@ -26,6 +26,7 @@ var context = new CustomAssemblyLoadContext();
 context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "Utilities/PDFLibrary/libwkhtmltox"));
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,5 +49,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Access}/{action=Login}/{id?}");
+
 
 app.Run();

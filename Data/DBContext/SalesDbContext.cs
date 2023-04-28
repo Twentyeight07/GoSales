@@ -40,6 +40,9 @@ public partial class SalesDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<Notification> Notifications { get; set; } = null!;
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 
@@ -404,6 +407,23 @@ public partial class SalesDbContext : DbContext
             entity.HasOne(d => d.RoleIdNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
                 .HasConstraintName("FK__Users__idRole__4316F928");
+        });
+
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.Property(e => e.NotificationId).HasColumnName("notificationId");
+
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("createdAt")
+                .HasDefaultValueSql("(getdate())");
+
+            entity.Property(e => e.Message)
+                .HasMaxLength(120)
+                .IsUnicode(false)
+                .HasColumnName("message");
+
+            entity.Property(e => e.UserId).HasColumnName("userId");
         });
 
         OnModelCreatingPartial(modelBuilder);

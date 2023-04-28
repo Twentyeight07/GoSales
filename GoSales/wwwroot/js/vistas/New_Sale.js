@@ -53,7 +53,7 @@ $(document).ready(function () {
                         brand: item.brand,
                         category: item.categoryName,
                         picUrl: item.picUrl,
-                        price: parseFloat(item.price)
+                        price: parseFloat(item.price) 
                         }
                     ))
                 };
