@@ -35,6 +35,7 @@ namespace GoSales.Controllers
             return StatusCode(StatusCodes.Status200OK, new { data = vmProductList });
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] IFormFile picture, [FromForm] string model)
         {

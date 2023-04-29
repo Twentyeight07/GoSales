@@ -9,5 +9,7 @@ namespace Entity
         public int? UserId { get; set; }
         public string? Message { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public int? ProductId { get; set; }
+        public int? Stock { get; set; }
     }
 }

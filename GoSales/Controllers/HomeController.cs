@@ -43,7 +43,14 @@ namespace GoSales.Controllers
         [HttpGet]
         public async Task<IActionResult> GetNotifications()
         {
-            List<VMNotification> vmNotification = _mapper.Map<List<VMNotification>>(await _notificationService.List());
+            ClaimsPrincipal claimUser = HttpContext.User;
+
+            int userId = Convert.ToInt32(claimUser.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
+                .Select(c => c.Value)
+                .FirstOrDefault());
+
+            
+            List<VMNotification> vmNotification = _mapper.Map<List<VMNotification>>(await _notificationService.List(userId));
             return StatusCode(StatusCodes.Status200OK, new { data = vmNotification });
         }
 

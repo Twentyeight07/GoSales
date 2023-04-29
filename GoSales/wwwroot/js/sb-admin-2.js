@@ -23,18 +23,22 @@
         fetch("/Home/GetNotifications").then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         }).then(res => {
-            let data = res.data;
-            console.log(data)
+            if (res.data.length >= 1) {
+                let data = res.data;
 
-            data.forEach((notif) => {
-                let noti = ` <a class="dropdown-item text-wrap" href="#">${notif.message}  <small>${notif.createdAt}</small></a>`
-                $("#notificationList").append(noti);
-            })
+                data.forEach((notif) => {
+                    let noti = ` <a class="dropdown-item text-wrap" href="#">${notif.message}  <small>${notif.createdAt}</small></a>`
+                    $("#notificationList").append(noti);
+                })
 
-            let d = `<div class="dropdown-divider"></div>`;
-            let seeAll = `<a class="dropdown-item text-wrap" href="#">Ver todas las notificaciones</a>`
+                let d = `<div class="dropdown-divider"></div>`;
+                let seeAll = `<a class="dropdown-item text-wrap" href="#"><b>Ver todas las notificaciones</b></a>`
 
-            $("#notificationList").append(d).append(seeAll);
+                $("#notificationList").append(d).append(seeAll);
+            } else {
+                let message = `<a class="dropdown-item text-wrap" href="#">Por el momento no tiene ninguna notificaci&#243n</a>`;
+                $("#notificationList").append(message);
+            }
                             
             
         })

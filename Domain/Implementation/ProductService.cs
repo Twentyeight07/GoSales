@@ -27,6 +27,7 @@ namespace Domain.Implementation
             return query.Include(c => c.Category).ToList();
         }
 
+
         public async Task<Product> Create(Product entity, Stream picture = null, string picName = "")
         {
             Product productExists = await _repository.Get(p => p.BarCode == entity.BarCode);

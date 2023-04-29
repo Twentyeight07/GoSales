@@ -19,10 +19,16 @@ namespace Domain.Implementation
             _repository = repository;
         }
 
-        public async Task<List<Notification>> List()
+        public async Task<List<Notification>> List(int userId)
         {
-            IQueryable<Notification> query = await _repository.Consult();
+            IQueryable<Notification> query = await _repository.Consult(n => n.UserId == userId);
             return query.OrderByDescending(d => d.CreatedAt).Take(5).ToList();
         }
+
+        public Task<Notification> Create(Notification entity)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

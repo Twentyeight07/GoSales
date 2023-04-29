@@ -9,6 +9,7 @@ namespace Domain.Interfaces
 {
     public interface INotificationService
     {
-        Task<List<Notification>> List();
+        Task<List<Notification>> List(int userId);
+        Task<Notification> Create(Notification entity);
     }
 }
