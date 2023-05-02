@@ -25,9 +25,22 @@ namespace Domain.Implementation
             return query.OrderByDescending(d => d.CreatedAt).Take(5).ToList();
         }
 
-        public Task<Notification> Create(Notification entity)
+        public async Task<Notification> Create(Notification entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Notification createdNotification = await _repository.Create(entity);
+                if(createdNotification.NotificationId == 0)
+                    throw new TaskCanceledException("No se pudo crear la notificación");
+
+                return createdNotification;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }

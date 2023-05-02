@@ -424,6 +424,11 @@ public partial class SalesDbContext : DbContext
                 .HasColumnName("message");
 
             entity.Property(e => e.UserId).HasColumnName("userId");
+
+            entity.Property(e => e.ProductId).HasColumnName("productId");
+
+            entity.Property(e => e.Stock).HasColumnName("stock");
+            
         });
 
         OnModelCreatingPartial(modelBuilder);

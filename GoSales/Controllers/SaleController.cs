@@ -19,13 +19,15 @@ namespace GoSales.Controllers
         private readonly ISaleDocTypeService _saleDocTypeService;
         private readonly ISaleService _saleService;
         private readonly IConverter _converter;
+        private readonly INotificationService _notificationService;
 
-        public SaleController(IMapper mapper, ISaleDocTypeService saleDocTypeService, ISaleService saleService, IConverter converter)
+        public SaleController(IMapper mapper, ISaleDocTypeService saleDocTypeService, ISaleService saleService, IConverter converter, INotificationService notificationService)
         {
             _mapper = mapper;
             _saleDocTypeService = saleDocTypeService;
             _saleService = saleService;
             _converter = converter;
+            _notificationService = notificationService;
         }
 
         public IActionResult NewSale()
@@ -59,6 +61,7 @@ namespace GoSales.Controllers
         public async Task<IActionResult> RecordSale([FromBody] VMSale model)
         {
             GenericResponse<VMSale> gResponse = new();
+            Notification notification = new();
 
             try
             {
@@ -70,6 +73,8 @@ namespace GoSales.Controllers
 
                 Sale createdSale = await _saleService.Record(_mapper.Map<Sale>(model));
                 model = _mapper.Map<VMSale>(createdSale);
+
+                notification.Message = "Nueva venta registrada. Número de venta: " + model.SaleNumber;
 
                 gResponse.State = true;
                 gResponse.Object = model;
