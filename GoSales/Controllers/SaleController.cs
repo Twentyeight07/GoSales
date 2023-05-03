@@ -74,7 +74,12 @@ namespace GoSales.Controllers
                 Sale createdSale = await _saleService.Record(_mapper.Map<Sale>(model));
                 model = _mapper.Map<VMSale>(createdSale);
 
+
+                notification.UserRole = 1;
                 notification.Message = "Nueva venta registrada. Número de venta: " + model.SaleNumber;
+                notification.SaleNum = model.SaleNumber;
+
+                await _notificationService.Create(notification);
 
                 gResponse.State = true;
                 gResponse.Object = model;

@@ -13,25 +13,29 @@ namespace Domain.Implementation
     public class NotificationService : INotificationService
     {
         private readonly IGenericRepository<Notification> _repository;
+        private readonly IUserService _userService;
 
-        public NotificationService(IGenericRepository<Notification> repository)
+        public NotificationService(IGenericRepository<Notification> repository, IUserService userService)
         {
             _repository = repository;
+            _userService = userService;
         }
 
-        public async Task<List<Notification>> List(int userId)
+        public async Task<List<Notification>> List(int userRole)
         {
-            IQueryable<Notification> query = await _repository.Consult(n => n.UserId == userId);
-            return query.OrderByDescending(d => d.CreatedAt).Take(5).ToList();
+            IQueryable<Notification> query = await _repository.Consult(n => n.UserRole == userRole);
+            return query.OrderByDescending(d => d.CreatedAt).Take(3).ToList();
         }
 
         public async Task<Notification> Create(Notification entity)
         {
             try
             {
+
                 Notification createdNotification = await _repository.Create(entity);
-                if(createdNotification.NotificationId == 0)
+                if (createdNotification.NotificationId == 0)
                     throw new TaskCanceledException("No se pudo crear la notificación");
+                
 
                 return createdNotification;
 

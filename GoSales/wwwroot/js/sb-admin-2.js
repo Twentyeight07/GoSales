@@ -19,12 +19,13 @@
             ChangeTheme();
         }
 
-
+        // Initialization of notifications
         fetch("/Home/GetNotifications").then(response => {
             return response.ok ? response.json() : Promise.reject(response);
         }).then(res => {
             if (res.data.length >= 1) {
                 let data = res.data;
+
 
                 data.forEach((notif) => {
                     let noti = ` <a class="dropdown-item text-wrap" href="#">${notif.message}  <small>${notif.createdAt}</small></a>`

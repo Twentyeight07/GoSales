@@ -188,6 +188,13 @@ namespace Domain.Implementation
             return res;
         }
 
+        public async Task<List<User>> GetByRole(int userRole)
+        {
+            IQueryable<User> query = await _repository.Consult(u => u.RoleId == userRole);
+
+            return query.ToList();
+        }
+
         public async Task<bool> SaveProfile(User entity)
         {
             try

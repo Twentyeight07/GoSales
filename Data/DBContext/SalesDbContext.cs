@@ -423,11 +423,13 @@ public partial class SalesDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("message");
 
-            entity.Property(e => e.UserId).HasColumnName("userId");
+            entity.Property(e => e.UserRole).HasColumnName("userRole");
 
-            entity.Property(e => e.ProductId).HasColumnName("productId");
+            entity.Property(e => e.SaleNum)
+            .HasMaxLength(50)
+            .IsUnicode(false)
+            .HasColumnName("saleNum");
 
-            entity.Property(e => e.Stock).HasColumnName("stock");
             
         });
 
