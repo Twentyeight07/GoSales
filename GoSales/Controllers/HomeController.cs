@@ -49,8 +49,9 @@ namespace GoSales.Controllers
                 .Select(c => c.Value)
                 .FirstOrDefault());
 
+            Entity.User userRole = await _userService.GetById(userId);
             
-            List<VMNotification> vmNotification = _mapper.Map<List<VMNotification>>(await _notificationService.List(userId));
+            List<VMNotification> vmNotification = _mapper.Map<List<VMNotification>>(await _notificationService.List(Convert.ToInt32(userRole.RoleId)));
             return StatusCode(StatusCodes.Status200OK, new { data = vmNotification });
         }
 

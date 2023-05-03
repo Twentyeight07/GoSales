@@ -26,9 +26,10 @@
             if (res.data.length >= 1) {
                 let data = res.data;
 
-
                 data.forEach((notif) => {
-                    let noti = ` <a class="dropdown-item text-wrap" href="#">${notif.message}  <small>${notif.createdAt}</small></a>`
+                    let noti = ` <a class="dropdown-item text-wrap" href="#" data-sale="${notif.saleNum}">${notif.message}  <small>${notif.createdAt}</small></a>`
+
+
                     $("#notificationList").append(noti);
                 })
 
@@ -147,6 +148,46 @@
         }
 
     }
+
+    // When the user press the notification
+    $("#notificationList").on("click",".dropdown-item", function (e) {
+        e.preventDefault();
+        const a = $(this).attr("data-sale");
+
+        fetch(`/Sale/History?saleNumber=${a}`).then(response => {
+            return response.ok ? response.json() : Promise.reject(response);
+        }).then(res => {
+            let d = res[0];
+
+            $("#txtRecordDate").val(d.registryDate)
+            $("#txtSaleNum").val(d.saleNumber)
+            $("#txtRecordUser").val(d.user)
+            $("#txtDocType").val(d.saleDocType)
+            $("#txtClientDoc").val(d.clientDoc)
+            $("#txtClientName").val(d.clientName)
+            $("#txtSubTotal").val(d.subTotal)
+            $("#txtIGV").val(d.totalTax)
+            $("#txtTotal").val(d.total)
+
+            $("#tbProducts tbody").html("");
+
+            d.saleDetail.forEach((item) => {
+                $("#tbProducts tbody").append(
+                    $("<tr>").append(
+                        $("<td>").text(item.productDescription),
+                        $("<td>").text(item.quantity),
+                        $("<td>").text(item.price),
+                        $("<td>").text(item.total)
+                    )
+                )
+            })
+
+            $("#linkPrint").attr("href", `/Sale/ShowSalePDF?saleNumber=${d.saleNumber}`)
+
+            $("#modalData").modal("show");
+
+        })
+    })
 
 
 })(jQuery); // End of use strict
