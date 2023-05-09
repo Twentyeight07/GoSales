@@ -26,6 +26,7 @@
             if (res.data.length >= 1) {
                 let data = res.data;
 
+                // the response to this fetch is an array with all the notifications, we make a foreach bucle to read all and put it into the dropdown
                 data.forEach((notif) => {
                     let noti = ` <a class="dropdown-item text-wrap" href="#" data-sale="${notif.saleNum}">${notif.message}  <small>${notif.createdAt}</small></a>`
 
@@ -33,10 +34,6 @@
                     $("#notificationList").append(noti);
                 })
 
-                let d = `<div class="dropdown-divider"></div>`;
-                let seeAll = `<a class="dropdown-item text-wrap" href="#"><b>Ver todas las notificaciones</b></a>`
-
-                $("#notificationList").append(d).append(seeAll);
             } else {
                 let message = `<a class="dropdown-item text-wrap" href="#">Por el momento no tiene ninguna notificaci&#243n</a>`;
                 $("#notificationList").append(message);

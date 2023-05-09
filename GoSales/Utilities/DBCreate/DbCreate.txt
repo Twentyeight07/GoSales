@@ -1,0 +1,149 @@
+﻿
+create database SalesDB
+
+go
+
+use SalesDB
+
+go
+
+create table Menu(
+menuId int primary key identity(1,1),
+description varchar(30),
+idParentMenu int references Menu(menuId),
+icon varchar(30),
+controller varchar(30),
+actionPage varchar(30),
+isActive bit,
+registryDate datetime default getdate()
+)
+
+go
+
+create table Role(
+roleId int primary key identity(1,1),
+description varchar(30),
+isActive bit,
+registryDate datetime default getdate()
+)
+
+go
+ 
+ create table RoleMenu(
+ roleMenuId int primary key identity(1,1),
+ roleid int references Role(roleId),
+ menuId int references Menu(menuId),
+ isActive bit,
+ registryDate datetime default getdate()
+ )
+
+go
+
+create table User(
+userId int primary key identity(1,1),
+name varchar(50),
+email varchar(50),
+phone varchar(50),
+idRole int references Role(roleId),
+picURL varchar(500),
+picName varchar(100),
+password varchar(100),
+isActive bit,
+registryDate datetime default getdate()
+)
+
+go
+
+create table Category(
+categoryId int primary key identity(1,1),
+description varchar(50),
+isActive bit,
+registryDate datetime default getdate()
+)
+
+go
+
+create table Product(
+productId int primary key identity(1,1),
+barCode varchar(50),
+brand varchar(50),
+description varchar(100),
+categoryId int references Category(categoryId),
+stock int,
+picURL varchar(500),
+picName varchar(100),
+price decimal(10,2),
+isActive bit,
+registryDate datetime default getdate()
+)
+
+go
+
+create table CorrelativeNumber(
+correlativeNumberId int primary key identity(1,1),
+lastNumber int,
+digitsQuantity int,
+management varchar(100),
+fechaActualizacion datetime
+)
+
+go
+
+create table SaleDocType(
+saleDocTypeId int primary key identity(1,1),
+description varchar(50),
+isActive bit,
+registryDate datetime default getdate()
+)
+
+go
+
+create table Sale(
+saleId int primary key identity(1,1),
+saleNumber varchar(6),
+saleDocTypeId int references SaleDocType(saleDocTypeId),
+userId int references User(userId),
+clientDoc varchar(10),
+clientName varchar(20),
+subTotal decimal(10,2),
+taxTotal decimal(10,2),
+total decimal(10,2),
+registryDate datetime default getdate()
+)
+
+go
+
+create table SaleDetail(
+saleDetailId int primary key identity(1,1),
+saleId int references Sale(saleId),
+productId int,
+productBrand varchar(100),
+productDescription varchar(100),
+productCategory varchar(100),
+quantity int,
+price decimal(10,2),
+total decimal(10,2)
+)
+
+go
+
+create table Business(
+businessId int primary key,
+logoURL varchar(500),
+nombreLogo varchar(100),
+docNumber varchar(50),
+name varchar(50),
+email varchar(50),
+address varchar(50),
+phone varchar(50),
+taxRate decimal(10,2),
+currencySymbol varchar(5)
+)
+
+go
+
+create table Configuration(
+resource varchar(50),
+property varchar(50),
+value varchar(60)
+)

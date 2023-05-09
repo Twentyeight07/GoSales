@@ -51,7 +51,7 @@ To use the notification system, you need to create a table in your DB with the d
 + SaleNumber (To consult the details of that sale)
 + A message to display on the card
 
-You can also choose to include a date to be displayed on the card. In any case, you can modify everything you want in: *Domain -> Implementation -> NotificationService.cs*, the service is called in *HomeController.cs*, and the JavaScript code that initializes it is located at: *GoSales -> wwwroot -> js -> sb-admin-2.js* you can delete all this code and the button of notifications at: *GoSales -> wwwroot -> Views -> Shared -> _Layout.cshtml*  and the system will still work perfectly.
+You can also choose to include a date to be displayed on the card. In any case, you can modify everything you want in: *Domain -> Implementation -> NotificationService.cs*, the service is called in *HomeController.cs* and the JavaScript code that initialize it is on: *GoSales -> wwwroot -> js -> sb-admin-2.js* you can delete all this code and the button of notifications on: *GoSales -> wwwroot -> Views -> Shared -> _Layout.cshtml*  and all the system is going to work perfectly
 
 ********************************************
 
