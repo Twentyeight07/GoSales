@@ -1,5 +1,5 @@
 # GoSales
-### Which technologies I used? 🔧
+### Which technologies did I use? 🔧
 
 + C#
 + ASP.NET Core 6
@@ -32,7 +32,6 @@ If you need help creating the database, you can find a text file with the entire
 
 Run the following command in your NuGet Console:
 
-        
         Scaffold-DbContext "Data Source=(local)\SQLEXPRESS;
         Initial Catalog=TUDB;Integrated
         Security=True;Encrypt=False"Microsoft.EntityFrameworkCore.SqlServer

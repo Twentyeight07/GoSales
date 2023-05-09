@@ -1,5 +1,5 @@
 # GoSales
-### Which technologies I used? 🔧
+### Which technologies did I use? 🔧
 
 + C#
 + ASP.NET Core 6
