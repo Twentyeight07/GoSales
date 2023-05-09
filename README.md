@@ -32,7 +32,6 @@ If you need help creating the database, you can find a text file with the entire
 
 Run the following command in your NuGet Console:
 
-        :::console
         Scaffold-DbContext "Data Source=(local)\SQLEXPRESS;
         Initial Catalog=TUDB;Integrated
         Security=True;Encrypt=False"Microsoft.EntityFrameworkCore.SqlServer
